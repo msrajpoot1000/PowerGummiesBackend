@@ -63,29 +63,23 @@ app.post("/login", (req, res) => {
 
 
 
-app.post("/register", (req, res) => { 
-    const { Fname, Femail, Fpassword } = req.body;
-    User.findOne({ email: Femail }, (err, user) => {
+app.post("/signUp", (req, res) => { 
+    const { name, email, password } = req.body;
+    User.findOne({ email: email }, (err, user) => {
         if (user) {
             res.send({message:"User already registered"})
         } else {
              const user = new User({
-        Fname,Femail,Fpassword
+        name,email,password
     })
     user.save(err => {
-        if (err) {
-            res.send(err);
-        }
+        if (err) {   res.send(err); }
         else {
-            res.send({
-                message: "Successfully registered, please login now"
-            })
-
+            res.send({  message: "Successfully registered, please login now"  })
         }
     })
         }
     })
-   
 })
 // app.get("/login", (req, res) => {
 //     // res.send("<h1>My api login</h1>");
